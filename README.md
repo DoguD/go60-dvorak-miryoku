@@ -1,37 +1,42 @@
-# MoErgo Go60 Custom Configuration for ZMK
+# Go60 Dvorak Miryoku
 
-![MoErgo Logo](moergo_logo.png)
+ZMK config for the [MoErgo Go60](https://moergo.com/go60-support): Dvorak base, Miryoku-style 7-layer thumb system. A port of [5-col-corne-dvorak-miryoku](https://github.com/DoguD/5-col-corne-dvorak-miryoku); the layers, home row mods, clipboard and combo behave the same, so see that repo's README for the layout rationale.
 
-This repo is the official ZMK configuration of the MoErgo Go60 wireless split keyboard. Use it to develop your own keymap and easily build your own ZMK firmware to run on your Go60.
+## How the Corne layout maps onto the Go60
 
-**NOTE: You can also customize the layout of your Go60 keyboard with the Go60 Layout Editor webapp. For most users Go60 Layout Editor is the recommended and simpler option. More information is available at the official MoErgo Go60 Support site (see resources below).**
+```
+ ·  1  2  3  4  5 |  6  7  8  9  0  ·     number row (BASE; transparent on other layers)
+ ·  ┌─────────────┼─────────────┐  ·
+ ·  │  Corne 3x5  │  Corne 3x5  │  ·     outer column unused
+ ·  └─────────────┼─────────────┘  ·
+       ·  ·  ·    |    ·  ·  ·            3-key bottom row unused
+          T1 T2 T3 | T3 T2 T1             Corne thumbs, same order
+```
 
-These steps will get you using your keymap on your keyboard in the fastest time possible. It uses the GitHub Actions feature to build your firmware online.
+Go60 key positions (used by the hold-tap trigger lists and the combo):
 
-If you are looking to dig deeper into ZMK and develop new functionality, it is recommended to follow the steps of installing ZMK as found on the official ZMK documentation site (linked below).
+```
+  0  1  2  3  4  5 |  6  7  8  9 10 11
+ 12 13 14 15 16 17 | 18 19 20 21 22 23
+ 24 25 26 27 28 29 | 30 31 32 33 34 35
+ 36 37 38 39 40 41 | 42 43 44 45 46 47
+       48 49 50    |    51 52 53
+          54 55 56 | 57 58 59
+```
 
-## Resources
-- The [official MoErgo Go60 Support](https://moergo.com/go60-support) web site. Go60 documentation and other technical resources.
-- The [official MoErgo Discord Server](https://moergo.com/discord). Instant conversations with other Go60 users.
+## Differences from the Corne config
 
-- The [official ZMK Documentation](https://zmk.dev/docs) web site. Find the answers to many of your questions about ZMK Firmware.
-- The [official ZMK Discord Server](https://discord.gg/8cfMkQksSB). Instant conversations with other ZMK developers and users. Great technical resource!
+- **Number row** on BASE. Home row mods still need a key on the opposite hand, so Cmd+1–5 uses the right-hand Cmd (`T`) and Cmd+6–0 the left-hand Cmd (`E`).
+- **Bootloader on both halves** (MEDIA, top pinky keys). The Go60 firmware has to be flashed onto each half, so the right half needs its own key. This replaces the Corne's `&soft_off`, which has no wake-up key defined on the Go60.
+- **`BT_CLR`** on MEDIA, right outer column next to `BT_SEL 3`, since there is no separate settings-reset firmware.
+- **Touchpads:** MoErgo's defaults. Right pad moves the cursor, left pad scrolls (tap = right click).
+- **Debounce:** MoErgo's board defaults (4 ms press / 20 ms release) instead of the Corne's eager 1 / 10 ms.
 
-- The [official MoErgo ZMK Distribution](https://github.com/moergo-sc/zmk). Repository for ZMK firmware customized for Go60 and Glove80.
+## Building and flashing
 
-## Instructions
-1. Log into, or sign up for, your personal GitHub account.
-2. Create your own repository using this repository as a template ([instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)) and check it out on your local computer.
-3. Edit the keymap file(s) to suit your needs
-4. Commit and push your changes to your personal repo. Upon pushing it, GitHub Actions will start building a new version of your firmware with the updated keymap.
+Every push runs the **Build** workflow (Nix + [moergo-sc/zmk](https://github.com/moergo-sc/zmk)). Download `go60.uf2` from the run's artifacts, then flash it onto each half:
 
-## Firmware Files
-To locate your firmware files and reflash your Go60...
-1. log into GitHub and navigate to your personal config repository you just uploaded your keymap changes to.
-2. Click "Actions" in the main navigation, and in the left navigation click the "Build" link.
-3. Select the desired workflow run in the centre area of the page (based on date and time of the build you wish to use). You can also start a new build from this page by clicking the "Run workflow" button.
-4. After clicking the desired workflow run, you should be presented with a section at the bottom of the page called "Artifacts". This section contains the results of your build, in a file called "go60.uf2"
-5. Download the go60.uf2
-6. Flash the firmware to Go60 according to the user documentation on the official Go60 Support website (linked above)
+1. Hold `Esc` (MEDIA) and tap the top pinky key on the half you want to flash. It mounts as a USB drive.
+2. Copy `go60.uf2` onto the drive. Repeat for the other half.
 
-Your keyboard is now ready to use.
+For local builds, start Docker and run `./build.sh`.

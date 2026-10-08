@@ -9,6 +9,7 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/rgb.h>
 #include <dt-bindings/zmk/input_transform.h>
 #include <dt-bindings/zmk/pointing.h>
 
@@ -18,11 +19,10 @@
 // Layer indices
 #define BASE  0
 #define NAV   1
-#define MOUSE 2
-#define MEDIA 3
-#define NUM   4
-#define SYM   5
-#define FUN   6
+#define NUM   2
+#define SYM   3
+#define SYS   4
+#define TOUCH 5
 
 // macOS clipboard shortcuts (change LG to LC for Linux/Windows)
 #define U_UNDO LG(Z)
@@ -31,7 +31,6 @@
 #define U_COPY LG(C)
 #define U_PSTE LG(V)
 
-// Go60 keys outside the Corne's 36 (number row aside) are unused
 #define XXX &none
 #define ___ &trans
 
@@ -45,8 +44,7 @@
  *        48 49 50    |    51 52 53
  *           54 55 56 | 57 58 59
  *
- * The Corne's 5 columns map onto 13-17/18-22, 25-29/30-34 and 37-41/42-46;
- * its thumbs map onto 54-59 in the same order.
+ * The 3x5 core is 13-17/18-22, 25-29/30-34 and 37-41/42-46; thumbs 54-59.
  */
 
 / {
@@ -60,6 +58,16 @@
     };
 
     behaviors {
+        // Bottom-left corner (MoErgo's Magic key): tap shows battery and
+        // Bluetooth status on the LEDs, hold opens SYS
+        magic: magic {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&mo>, <&rgb_ug_status_macro>;
+        };
+
         // Positional homerow mods: only trigger as mod when paired with a
         // key on the OPPOSITE hand. Stops same-hand rolls (e.g. typing
         // "as", "th") from misfiring as Ctrl/Alt/GUI/Shift.
@@ -101,6 +109,14 @@
         };
     };
 
+    macros {
+        rgb_ug_status_macro: rgb_ug_status_macro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&rgb_ug RGB_STATUS>;
+        };
+    };
+
     combos {
         compatible = "zmk,combos";
         combo_caps {
@@ -118,47 +134,23 @@
             display-name = "Base";
             bindings = <
 XXX             &kp N1          &kp N2          &kp N3          &kp N4          &kp N5          &kp N6          &kp N7          &kp N8          &kp N9          &kp N0          XXX
-XXX             &kp SQT         &kp COMMA       &kp DOT         &kp P           &kp Y           &kp F           &kp G           &kp C           &kp R           &kp L           XXX
-XXX             &hml LCTRL A    &hml LALT O     &hml LGUI E     &hml LSHFT U    &kp I           &kp D           &hmr RSHFT H    &hmr RGUI T     &hmr RALT N     &hmr RCTRL S    XXX
-XXX             &kp FSLH        &kp Q           &kp J           &kp K           &kp X           &kp B           &kp M           &kp W           &kp V           &kp Z           XXX
-                                XXX             XXX             XXX                                             XXX             XXX             XXX
-                                                &lt MEDIA ESC   &lt NUM SPACE   &lt SYM TAB     &lt MOUSE RET   &lt NAV BSPC    &lt FUN DEL
+XXX             &kp SQT         &kp COMMA       &kp DOT         &kp P           &kp Y           &kp F           &kp G           &kp C           &kp R           &kp L           &kp EQUAL
+XXX             &hml LCTRL A    &hml LALT O     &hml LGUI E     &hml LSHFT U    &kp I           &kp D           &hmr RSHFT H    &hmr RGUI T     &hmr RALT N     &hmr RCTRL S    &kp MINUS
+&magic SYS 0    &kp FSLH        &kp Q           &kp J           &kp K           &kp X           &kp B           &kp M           &kp W           &kp V           &kp Z           XXX
+                                &kp C_PREV      &kp C_PP        &kp C_NEXT                                      &kp C_MUTE      &kp C_VOL_DN    &kp C_VOL_UP
+                                                &kp ESC         &lt NUM SPACE   &lt SYM TAB     &kp RET         &lt NAV BSPC    &kp DEL
             >;
         };
 
         nav_layer {
             display-name = "Nav";
             bindings = <
-___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___
+&kp F11         &kp F1          &kp F2          &kp F3          &kp F4          &kp F5          &kp F6          &kp F7          &kp F8          &kp F9          &kp F10         &kp F12
 XXX             &kp INS         &kp HOME        &kp UP          &kp END         &kp PG_UP       XXX             XXX             XXX             XXX             XXX             XXX
 XXX             &caps_word      &kp LEFT        &kp DOWN        &kp RIGHT       &kp PG_DN       XXX             &kp RSHFT       &kp RGUI        &kp RALT        &kp RCTRL       XXX
 XXX             &kp U_UNDO      &kp U_CUT       &kp U_COPY      &kp U_PSTE      &kp U_REDO      &kp U_REDO      &kp U_PSTE      &kp U_COPY      &kp U_CUT       &kp U_UNDO      XXX
                                 XXX             XXX             XXX                                             XXX             XXX             XXX
                                                 &kp RET         &kp BSPC        &kp DEL         XXX             XXX             XXX
-            >;
-        };
-
-        mouse_layer {
-            display-name = "Mouse";
-            bindings = <
-___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___
-XXX             XXX             &msc SCRL_RIGHT &mmv MOVE_UP    &msc SCRL_LEFT  &msc SCRL_DOWN  XXX             XXX             XXX             XXX             XXX             XXX
-XXX             XXX             &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT &msc SCRL_UP    XXX             &kp RSHFT       &kp RGUI        &kp RALT        &kp RCTRL       XXX
-XXX             &kp U_UNDO      &kp U_CUT       &kp U_COPY      &kp U_PSTE      &kp U_REDO      &kp U_REDO      &kp U_PSTE      &kp U_COPY      &kp U_CUT       &kp U_UNDO      XXX
-                                XXX             XXX             XXX                                             XXX             XXX             XXX
-                                                &mkp MB2        &mkp MB1        &mkp MB3        XXX             XXX             XXX
-            >;
-        };
-
-        media_layer {
-            display-name = "Media";
-            bindings = <
-___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___
-XXX             &bootloader     XXX             XXX             XXX             XXX             XXX             XXX             XXX             XXX             &bootloader     XXX
-XXX             &kp LCTRL       &kp LALT        &kp LGUI        &kp LSHFT       XXX             XXX             &kp C_PREV      &kp C_VOL_DN    &kp C_VOL_UP    &kp C_NEXT      XXX
-XXX             XXX             XXX             XXX             XXX             XXX             &out OUT_TOG    &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_CLR
-                                XXX             XXX             XXX                                             XXX             XXX             XXX
-                                                XXX             XXX             XXX             &kp C_STOP      &kp C_PP        &kp C_MUTE
             >;
         };
 
@@ -186,25 +178,46 @@ XXX             XXX             XXX             XXX             XXX             
             >;
         };
 
-        fun_layer {
-            display-name = "Fun";
+        sys_layer {
+            display-name = "Sys";
+            bindings = <
+XXX             XXX             XXX             XXX             XXX             XXX             XXX             XXX             XXX             XXX             XXX             XXX
+XXX             XXX             XXX             &bootloader     XXX             XXX             XXX             XXX             &bootloader     XXX             XXX             XXX
+XXX             XXX             XXX             XXX             XXX             XXX             XXX             XXX             XXX             XXX             XXX             XXX
+XXX             XXX             XXX             XXX             XXX             XXX             &out OUT_TOG    &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_CLR
+                                XXX             XXX             XXX                                             XXX             XXX             XXX
+                                                XXX             XXX             XXX             XXX             XXX             XXX
+            >;
+        };
+
+        touch_layer {
+            display-name = "Touch";
             bindings = <
 ___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___
-XXX             &kp F12         &kp F7          &kp F8          &kp F9          &kp PSCRN       XXX             XXX             XXX             XXX             XXX             XXX
-XXX             &kp F11         &kp F4          &kp F5          &kp F6          &kp SLCK        XXX             &kp RSHFT       &kp RGUI        &kp RALT        &kp RCTRL       XXX
-XXX             &kp F10         &kp F1          &kp F2          &kp F3          &kp PAUSE_BREAK XXX             XXX             XXX             XXX             XXX             XXX
-                                XXX             XXX             XXX                                             XXX             XXX             XXX
-                                                &kp K_APP       &kp SPACE       &kp TAB         XXX             XXX             XXX
+___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___
+___             &kp LCTRL       &kp LALT        &kp LGUI        &kp LSHFT       ___             ___             ___             ___             ___             ___             ___
+___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___             ___
+                                ___             ___             ___                                             ___             ___             ___
+                                                &mkp MB2        ___             &mkp MB1        ___             ___             ___
             >;
         };
     };
 };
 
-// Right touchpad moves the cursor, left touchpad scrolls (MoErgo defaults)
+// Right touchpad moves the cursor and turns on TOUCH while in use; left
+// touchpad scrolls (tap = right click)
 &cirque_rh_listener {
-    input-processors = <&zip_xy_scaler 3 1>;
+    input-processors = <&zip_xy_scaler 3 1>, <&zip_temp_layer TOUCH 500>;
 };
 
 &cirque_lh_listener {
     input-processors = <&zip_xy_to_scroll_mapper>, <&zip_xy_scaler 1 8>, <&zip_click_to_right_click_mapper>;
+};
+
+// TOUCH only turns on after 300 ms without typing, so brushing the pad
+// mid-sentence does nothing. Any key other than its mods and clicks turns
+// it off again.
+&zip_temp_layer {
+    require-prior-idle-ms = <300>;
+    excluded-positions = <25 26 27 28 54 56>;
 };

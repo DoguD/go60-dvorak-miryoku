@@ -210,10 +210,11 @@
 
     combos {
         compatible = "zmk,combos";
+        // Both home-row shifts: Caps Word (Caps Lock is MAGIC + h)
         combo_caps {
             timeout-ms = <50>;
             key-positions = <28 31>;
-            bindings = <&kp CAPS>;
+            bindings = <&caps_word>;
             layers = <BASE>;
         };
     };
@@ -237,8 +238,8 @@ XXX             &kp SQT         &kp COMMA       &kp DOT         &kp P           
             display-name = "Nav";
             bindings = <
 &kp F11         &kp F1          &kp F2          &kp F3          &kp F4          &kp F5          &kp F6          &kp F7          &kp F8          &kp F9          &kp F10         &kp F12
-XXX             &kp INS         &kp HOME        &kp UP          &kp END         &kp PG_UP       XXX             XXX             XXX             XXX             XXX             XXX
-XXX             &caps_word      &kp LEFT        &kp DOWN        &kp RIGHT       &kp PG_DN       XXX             &kp RSHFT       &kp RGUI        &kp RALT        &kp RCTRL       XXX
+XXX             &kp PG_UP       &kp LG(LEFT)    &kp UP          &kp LG(RIGHT)   &kp PG_DN       XXX             XXX             XXX             XXX             XXX             XXX
+XXX             &kp LA(LEFT)    &kp LEFT        &kp DOWN        &kp RIGHT       &kp LA(RIGHT)   XXX             &kp RSHFT       &kp RGUI        &kp RALT        &kp RCTRL       XXX
 XXX             &kp U_UNDO      &kp U_CUT       &kp U_COPY      &kp U_PSTE      &kp U_REDO      &kp U_REDO      &kp U_PSTE      &kp U_COPY      &kp U_CUT       &kp U_UNDO      XXX
                                 XXX             XXX             XXX                                             XXX             XXX             XXX
                                                 &kp RET         &kp BSPC        &kp DEL         XXX             XXX             XXX
@@ -286,7 +287,7 @@ ___             ___             ___             ___             ___             
             bindings = <
 &bt BT_CLR      &kp C_BRI_DN    &kp C_BRI_UP    &kp C_PREV      &kp C_NEXT      &kp C_PP        &kp C_MUTE      &kp C_VOL_DN    &kp C_VOL_UP    XXX             XXX             &bt BT_CLR_ALL
 &bootloader     &rgb_ug RGB_SPI &rgb_ug RGB_SAI &rgb_ug RGB_HUI &rgb_ug RGB_BRI &rgb_ug RGB_TOG XXX             XXX             XXX             XXX             XXX             &bootloader
-&sys_reset      &rgb_ug RGB_SPD &rgb_ug RGB_SAD &rgb_ug RGB_HUD &rgb_ug RGB_BRD &rgb_ug RGB_EFF XXX             XXX             XXX             XXX             XXX             &sys_reset
+&sys_reset      &rgb_ug RGB_SPD &rgb_ug RGB_SAD &rgb_ug RGB_HUD &rgb_ug RGB_BRD &rgb_ug RGB_EFF XXX             &kp CAPS        XXX             XXX             XXX             &sys_reset
 XXX             XXX             &bt_0           &bt_1           &bt_2           &bt_3           XXX             XXX             XXX             XXX             XXX             XXX
                                 &out OUT_USB    XXX             XXX                                             XXX             XXX             XXX
                                                 XXX             XXX             XXX             XXX             XXX             XXX

@@ -17,20 +17,20 @@ Mgc   /    q    j    k    x  |  b    m    w    v    z    ·
 - Home row mods (CAGS): Ctrl / Alt / Cmd / Shift on `a o e u` and `h t n s`. Positional: they only act as mods with a key on the opposite hand, so Cmd+1–5 uses the right-hand Cmd (`T`) and Cmd+6–0 the left-hand Cmd (`E`).
 - `-` and `=` sit where standard Dvorak has them; both are also on NUM.
 - Esc, Enter and Backspace are plain keys (no hold), so Backspace repeats when held.
-- Both shifts together toggle Caps Lock.
+- Both shifts together turn on Caps Word: capitals until the end of the word, for `CONSTANT_NAMES`. Caps Lock is MAGIC + `h`.
 
 ## Layers
 
 | Layer | How | Contents |
 |---|---|---|
-| NAV | hold Delete | Left hand: inverted-T arrows, Home/End, PgUp/PgDn, Caps Word, clipboard. F1–F12 on the number row. |
+| NAV | hold Delete | Left hand: inverted-T arrows with word jumps (⌥← / ⌥→) beside them, line start / end (⌘← / ⌘→) above, PgUp / PgDn on the top corners, clipboard on the bottom row. Add Shift (right hand) to select. F1–F12 on the number row. |
 | NUM | hold Space | Right-hand number pad, plus `` [ ] ; = \ ` - . `` |
 | SYM | hold Tab | Shifted symbols on the right hand |
 | TR | tap the left outer home-row key (`TR`), then the letter; or hold it | Turkish letters on their Latin base letters: ç on c, ğ on g, ı on i, ö on o, ş on s, ü on u. Shift gives Ç Ğ Ö Ş Ü, and Shift+ı gives İ (Shift+i on Base already gives I). |
-| MAGIC | hold the bottom-left corner (`Mgc`) | MoErgo's default Magic layer: RGB lighting, Bluetooth profiles (tap to select, double-tap to disconnect), clear one / all pairings, USB output, screen brightness, media, reset and bootloader (outer column, second row, each half). Only the factory-test key is left out. Tapping the corner instead shows battery, Bluetooth, layer and Caps Lock status on the left-hand LEDs for 10 s. |
+| MAGIC | hold the bottom-left corner (`Mgc`) | MoErgo's default Magic layer: RGB lighting, Bluetooth profiles (tap to select, double-tap to disconnect), clear one / all pairings, USB output, screen brightness, media, reset, bootloader (outer column, second row, each half) and Caps Lock (`h`). Only the factory-test key is left out. Tapping the corner instead shows battery, Bluetooth, layer and Caps Lock status on the left-hand LEDs for 10 s. |
 | TOUCH | finger on the right touchpad | Left home row = plain Ctrl / Alt / Cmd / Shift (instant Cmd-click, Shift-click); Esc thumb = right click, Tab thumb = left click (hold to drag). Everything else passes through. |
 
-Turkish letters need the macOS input source set to **ABC – Extended** (System Settings → Keyboard → Input Sources). It types exactly like U.S.; the TR keys send an Option dead key and then the letter (⌥c then s = ş). Unicode Hex Input is not used because it breaks Option+Backspace and Option+arrows. Caps Lock and Caps Word don't capitalize the Turkish letters, so use Shift.
+Turkish letters need the macOS input source set to **ABC – Extended** (System Settings → Keyboard → Input Sources). It types exactly like U.S.; the TR keys send an Option dead key and then the letter (⌥c then s = ş). Unicode Hex Input is not used because it breaks Option+Backspace and Option+arrows. Shift and Caps Lock capitalize the Turkish letters (with Caps Lock on, the TR `ı` key gives İ and plain `i` gives I). Caps Word doesn't work with them (it types a stray accent), so use Caps Lock for Turkish in all caps.
 
 The right touchpad moves the cursor (2× speed). The left touchpad scrolls (tap = right click), inverted to match the Mac trackpad with natural scrolling on.
 

@@ -30,9 +30,9 @@ Mgc   /    q    j    k    x  |  b    m    w    v    z    ·
 | MAGIC | hold the bottom-left corner (`Mgc`) | MoErgo's default Magic layer: RGB lighting, Bluetooth profiles (tap to select, double-tap to disconnect), clear one / all pairings, USB output, screen brightness, media, reset and bootloader (outer column, second row, each half). Only the factory-test key is left out. Tapping the corner instead shows battery, Bluetooth, layer and Caps Lock status on the left-hand LEDs for 10 s. |
 | TOUCH | finger on the right touchpad | Left home row = plain Ctrl / Alt / Cmd / Shift (instant Cmd-click, Shift-click); Esc thumb = right click, Tab thumb = left click (hold to drag). Everything else passes through. |
 
-Turkish letters need the macOS input source set to **Unicode Hex Input** (System Settings → Keyboard → Input Sources). It types like U.S.; the TR keys send each letter as Option + its hex code point. Caps Lock and Caps Word don't capitalize them, so use Shift.
+Turkish letters need the macOS input source set to **ABC – Extended** (System Settings → Keyboard → Input Sources). It types exactly like U.S.; the TR keys send an Option dead key and then the letter (⌥c then s = ş). Unicode Hex Input is not used because it breaks Option+Backspace and Option+arrows. Caps Lock and Caps Word don't capitalize the Turkish letters, so use Shift.
 
-The touchpads use MoErgo's defaults: right pad moves the cursor, left pad scrolls (tap = right click).
+The right touchpad moves the cursor (2× speed). The left touchpad scrolls (tap = right click), inverted to match the Mac trackpad with natural scrolling on.
 
 TOUCH turns on only after 300 ms without typing and stays on for 500 ms after the last touchpad movement. Pressing any key other than its four mods and two clicks turns it off at once, so you can go straight back to typing (except `a o e u`, Esc and Tab within that half second).
 

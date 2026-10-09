@@ -35,15 +35,16 @@
 #define XXX &none
 #define ___ &trans
 
-// Turkish letters via macOS "Unicode Hex Input": hold Option, type the
-// code point in hex. The input source must be set to Unicode Hex Input.
-#define UC(name, d1, d2, d3, d4) \
+// Turkish letters via the macOS "ABC – Extended" input source: an Option
+// dead key, then the letter (⌥c then s = ş). Identical to U.S. otherwise,
+// and unlike Unicode Hex Input it keeps Option+Backspace and Option+arrows.
+#define DK(name, dead, letter) \
     name: name { \
         compatible = "zmk,behavior-macro"; \
         #binding-cells = <0>; \
-        tap-ms = <10>; \
-        wait-ms = <10>; \
-        bindings = <&macro_press &kp LALT>, <&macro_tap &kp d1 &kp d2 &kp d3 &kp d4>, <&macro_release &kp LALT>; \
+        tap-ms = <5>; \
+        wait-ms = <5>; \
+        bindings = <&kp dead &kp letter>; \
     };
 
 // Lowercase on tap, the given capital with Shift
@@ -157,12 +158,12 @@
             bindings = <&bt_select_3>, <&bt BT_DISC 3>;
         };
 
-        TR_KEY(tr_c, uc_c_lo, uc_c_up)
-        TR_KEY(tr_g, uc_g_lo, uc_g_up)
-        TR_KEY(tr_i, uc_i_dotless, uc_i_dotted_up)
-        TR_KEY(tr_o, uc_o_lo, uc_o_up)
-        TR_KEY(tr_s, uc_s_lo, uc_s_up)
-        TR_KEY(tr_u, uc_u_lo, uc_u_up)
+        TR_KEY(tr_c, dk_c_lo, dk_c_up)
+        TR_KEY(tr_g, dk_g_lo, dk_g_up)
+        TR_KEY(tr_i, dk_i_dotless, dk_i_dotted_up)
+        TR_KEY(tr_o, dk_o_lo, dk_o_up)
+        TR_KEY(tr_s, dk_s_lo, dk_s_up)
+        TR_KEY(tr_u, dk_u_lo, dk_u_up)
     };
 
     macros {
@@ -193,18 +194,18 @@
             bindings = <&out OUT_BLE>, <&bt BT_SEL 3>;
         };
 
-        UC(uc_c_lo, N0, N0, E, N7)          // ç
-        UC(uc_c_up, N0, N0, C, N7)          // Ç
-        UC(uc_g_lo, N0, N1, N1, F)          // ğ
-        UC(uc_g_up, N0, N1, N1, E)          // Ğ
-        UC(uc_i_dotless, N0, N1, N3, N1)    // ı
-        UC(uc_i_dotted_up, N0, N1, N3, N0)  // İ (Shift+i on Base already gives I)
-        UC(uc_o_lo, N0, N0, F, N6)          // ö
-        UC(uc_o_up, N0, N0, D, N6)          // Ö
-        UC(uc_s_lo, N0, N1, N5, F)          // ş
-        UC(uc_s_up, N0, N1, N5, E)          // Ş
-        UC(uc_u_lo, N0, N0, F, C)           // ü
-        UC(uc_u_up, N0, N0, D, C)           // Ü
+        DK(dk_c_lo, LA(C), C)             // ç
+        DK(dk_c_up, LA(C), LS(C))         // Ç
+        DK(dk_g_lo, LA(B), G)             // ğ
+        DK(dk_g_up, LA(B), LS(G))         // Ğ
+        DK(dk_i_dotless, LA(W), I)        // ı
+        DK(dk_i_dotted_up, LA(W), LS(I))  // İ (Shift+i on Base already gives I)
+        DK(dk_o_lo, LA(U), O)             // ö
+        DK(dk_o_up, LA(U), LS(O))         // Ö
+        DK(dk_s_lo, LA(C), S)             // ş
+        DK(dk_s_up, LA(C), LS(S))         // Ş
+        DK(dk_u_lo, LA(U), U)             // ü
+        DK(dk_u_up, LA(U), LS(U))         // Ü
     };
 
     combos {
@@ -307,13 +308,15 @@ ___             ___             ___             ___             ___             
 };
 
 // Right touchpad moves the cursor and turns on TOUCH while in use; left
-// touchpad scrolls (tap = right click)
+// touchpad scrolls (tap = right click). Scroll is inverted on both axes so
+// it matches the Mac trackpad with macOS natural scrolling on (macOS
+// applies that setting to mice too).
 &cirque_rh_listener {
-    input-processors = <&zip_xy_scaler 3 1>, <&zip_temp_layer TOUCH 500>;
+    input-processors = <&zip_xy_scaler 2 1>, <&zip_temp_layer TOUCH 500>;
 };
 
 &cirque_lh_listener {
-    input-processors = <&zip_xy_to_scroll_mapper>, <&zip_xy_scaler 1 8>, <&zip_click_to_right_click_mapper>;
+    input-processors = <&zip_xy_to_scroll_mapper>, <&zip_xy_scaler 1 8>, <&zip_scroll_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>, <&zip_click_to_right_click_mapper>;
 };
 
 // TOUCH only turns on after 300 ms without typing, so brushing the pad

@@ -7,27 +7,30 @@ ZMK config for the [MoErgo Go60](https://moergo.com/go60-support): Dvorak base w
 ```
  ·    1    2    3    4    5  |  6    7    8    9    0    ·
  ·    '    ,    .    p    y  |  f    g    c    r    l    =
- ·    a    o    e    u    i  |  d    h    t    n    s    -
+TR    a    o    e    u    i  |  d    h    t    n    s    -
 Mgc   /    q    j    k    x  |  b    m    w    v    z    ·
           prev  ⏯  next      |     mute vol− vol+
             Esc  Spc  Tab    |  Ent  Bsp  Del
-                 NUM  SYM    |       NAV
+                 NUM  SYM    |            NAV
 ```
 
 - Home row mods (CAGS): Ctrl / Alt / Cmd / Shift on `a o e u` and `h t n s`. Positional: they only act as mods with a key on the opposite hand, so Cmd+1–5 uses the right-hand Cmd (`T`) and Cmd+6–0 the left-hand Cmd (`E`).
 - `-` and `=` sit where standard Dvorak has them; both are also on NUM.
-- Esc, Enter and Delete are plain keys (no hold).
+- Esc, Enter and Backspace are plain keys (no hold), so Backspace repeats when held.
 - Both shifts together toggle Caps Lock.
 
 ## Layers
 
 | Layer | How | Contents |
 |---|---|---|
-| NAV | hold Backspace | Left hand: inverted-T arrows, Home/End, PgUp/PgDn, Caps Word, clipboard. F1–F12 on the number row. |
+| NAV | hold Delete | Left hand: inverted-T arrows, Home/End, PgUp/PgDn, Caps Word, clipboard. F1–F12 on the number row. |
 | NUM | hold Space | Right-hand number pad, plus `` [ ] ; = \ ` - . `` |
 | SYM | hold Tab | Shifted symbols on the right hand |
-| SYS | hold the bottom-left corner (`Mgc`) | Bootloader (top row, middle finger, each half), `BT_SEL 0–3`, `BT_CLR`, USB/BLE toggle. Tapping the corner shows battery and Bluetooth status on the LEDs. |
+| TR | tap the left outer home-row key (`TR`), then the letter; or hold it | Turkish letters on their Latin base letters: ç on c, ğ on g, ı on i, ö on o, ş on s, ü on u. Shift gives Ç Ğ Ö Ş Ü, and Shift+ı gives İ (Shift+i on Base already gives I). |
+| MAGIC | hold the bottom-left corner (`Mgc`) | MoErgo's default Magic layer: RGB lighting, Bluetooth profiles (tap to select, double-tap to disconnect), clear one / all pairings, USB output, screen brightness, media, reset and bootloader (outer column, second row, each half). Only the factory-test key is left out. Tapping the corner instead shows battery, Bluetooth, layer and Caps Lock status on the left-hand LEDs for 10 s. |
 | TOUCH | finger on the right touchpad | Left home row = plain Ctrl / Alt / Cmd / Shift (instant Cmd-click, Shift-click); Esc thumb = right click, Tab thumb = left click (hold to drag). Everything else passes through. |
+
+Turkish letters need the macOS input source set to **Unicode Hex Input** (System Settings → Keyboard → Input Sources). It types like U.S.; the TR keys send each letter as Option + its hex code point. Caps Lock and Caps Word don't capitalize them, so use Shift.
 
 The touchpads use MoErgo's defaults: right pad moves the cursor, left pad scrolls (tap = right click).
 
@@ -48,7 +51,7 @@ TOUCH turns on only after 300 ms without typing and stays on for 500 ms after th
 
 Every push runs the **Build** workflow (Nix + [moergo-sc/zmk](https://github.com/moergo-sc/zmk)). Download `go60.uf2` from the run's artifacts, then flash it onto each half:
 
-1. Hold the bottom-left corner (SYS) and tap the bootloader key on the half you want to flash (top row, middle finger). It mounts as a USB drive.
+1. Hold the bottom-left corner (MAGIC) and tap the bootloader key on the half you want to flash (outer column, second row). It mounts as a USB drive.
 2. Copy `go60.uf2` onto the drive. Repeat for the other half.
 
 For local builds, start Docker and run `./build.sh`.

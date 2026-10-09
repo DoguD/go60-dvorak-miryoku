@@ -316,7 +316,7 @@ ___             ___             ___             ___             ___             
 };
 
 &cirque_lh_listener {
-    input-processors = <&zip_xy_to_scroll_mapper>, <&zip_xy_scaler 1 8>, <&zip_scroll_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>, <&zip_click_to_right_click_mapper>;
+    input-processors = <&zip_xy_to_scroll_mapper>, <&zip_xy_scaler 1 16>, <&zip_scroll_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>, <&zip_click_to_right_click_mapper>;
 };
 
 // TOUCH only turns on after 300 ms without typing, so brushing the pad

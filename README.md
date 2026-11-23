@@ -23,6 +23,7 @@ Mgc   /    q    j    k    x  |  b    m    w    v    z    ·
 
 | Layer | How | Contents |
 |---|---|---|
+| GAME | MAGIC + `g` toggles it on and off | Base with every hold removed, for games: the home row and the Space / Tab / Delete thumbs are plain keys, so a held key stays that key instead of becoming a modifier or a layer. No home-row mods, NAV, NUM or SYM while it is on (the touchpad's TOUCH mods still work), and Caps Word is off. It resets to off when the keyboard restarts. |
 | NAV | hold Delete | Left hand: inverted-T arrows with word jumps (⌥← / ⌥→) beside them, line start / end (⌘← / ⌘→) above, PgUp / PgDn on the top corners, clipboard on the bottom row. Add Shift (right hand) to select. F1–F12 on the number row. |
 | NUM | hold Space | Right-hand number pad, plus `` [ ] ; = \ ` - . `` |
 | SYM | hold Tab | Shifted symbols on the right hand |
